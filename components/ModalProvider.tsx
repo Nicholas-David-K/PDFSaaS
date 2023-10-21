@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import UploadModal from './UploadModal';
 
-const ModalProvider = () => {
+const ModalProvider = ({ isPro }: { isPro: boolean }) => {
     const [mounted, setIsmounted] = useState(false);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const ModalProvider = () => {
 
     return (
         <>
-            <UploadModal />
+            <UploadModal isPro={isPro} />
         </>
     );
 };

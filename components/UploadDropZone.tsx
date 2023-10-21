@@ -12,16 +12,16 @@ import { useToast } from '@/components/ui/use-toast';
 import useUploadModal from '@/hooks/use-upload-modal';
 import { useUploadThing } from '@/lib/upload-thing';
 
-type Props = {};
-
-const UploadDropZone = (props: Props) => {
+const UploadDropZone = ({ isPro }: { isPro: boolean }) => {
     const { toast } = useToast();
     const router = useRouter();
     const [isUploading, setIsUploading] = useState<boolean>(false);
     const [uploadProgress, setUploadProgress] = useState<number>(0);
     const uploadModal = useUploadModal();
 
-    const { startUpload } = useUploadThing('pdfUploader');
+    const { startUpload } = useUploadThing(
+        isPro ? 'proPlanUploader' : 'freePlanUploader'
+    );
 
     const { mutate: startPolling } = trpc.getFile.useMutation({
         onSuccess: (file) => {
@@ -109,7 +109,7 @@ const UploadDropZone = (props: Props) => {
                                     or drag and drop
                                 </p>
                                 <p className="text-xs text-zinc-500">
-                                    PDF (up to 4MB)
+                                    PDF (up to {isPro ? '16' : '4'}MB)
                                 </p>
                             </div>
 
